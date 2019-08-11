@@ -9,103 +9,6 @@ import (
 )
 
 var (
-	lockTransactionMockBegin  sync.RWMutex
-	lockTransactionMockCommit sync.RWMutex
-)
-
-// Ensure, that TransactionMock does implement Transaction.
-// If this is not the case, regenerate this file with moq.
-var _ airport.Transaction = &TransactionMock{}
-
-// TransactionMock is a mock implementation of Transaction.
-//
-//     func TestSomethingThatUsesTransaction(t *testing.T) {
-//
-//         // make and configure a mocked Transaction
-//         mockedTransaction := &TransactionMock{
-//             BeginFunc: func() error {
-// 	               panic("mock out the Begin method")
-//             },
-//             CommitFunc: func() error {
-// 	               panic("mock out the Commit method")
-//             },
-//         }
-//
-//         // use mockedTransaction in code that requires Transaction
-//         // and then make assertions.
-//
-//     }
-type TransactionMock struct {
-	// BeginFunc mocks the Begin method.
-	BeginFunc func() error
-
-	// CommitFunc mocks the Commit method.
-	CommitFunc func() error
-
-	// calls tracks calls to the methods.
-	calls struct {
-		// Begin holds details about calls to the Begin method.
-		Begin []struct {
-		}
-		// Commit holds details about calls to the Commit method.
-		Commit []struct {
-		}
-	}
-}
-
-// Begin calls BeginFunc.
-func (mock *TransactionMock) Begin() error {
-	if mock.BeginFunc == nil {
-		panic("TransactionMock.BeginFunc: method is nil but Transaction.Begin was just called")
-	}
-	callInfo := struct {
-	}{}
-	lockTransactionMockBegin.Lock()
-	mock.calls.Begin = append(mock.calls.Begin, callInfo)
-	lockTransactionMockBegin.Unlock()
-	return mock.BeginFunc()
-}
-
-// BeginCalls gets all the calls that were made to Begin.
-// Check the length with:
-//     len(mockedTransaction.BeginCalls())
-func (mock *TransactionMock) BeginCalls() []struct {
-} {
-	var calls []struct {
-	}
-	lockTransactionMockBegin.RLock()
-	calls = mock.calls.Begin
-	lockTransactionMockBegin.RUnlock()
-	return calls
-}
-
-// Commit calls CommitFunc.
-func (mock *TransactionMock) Commit() error {
-	if mock.CommitFunc == nil {
-		panic("TransactionMock.CommitFunc: method is nil but Transaction.Commit was just called")
-	}
-	callInfo := struct {
-	}{}
-	lockTransactionMockCommit.Lock()
-	mock.calls.Commit = append(mock.calls.Commit, callInfo)
-	lockTransactionMockCommit.Unlock()
-	return mock.CommitFunc()
-}
-
-// CommitCalls gets all the calls that were made to Commit.
-// Check the length with:
-//     len(mockedTransaction.CommitCalls())
-func (mock *TransactionMock) CommitCalls() []struct {
-} {
-	var calls []struct {
-	}
-	lockTransactionMockCommit.RLock()
-	calls = mock.calls.Commit
-	lockTransactionMockCommit.RUnlock()
-	return calls
-}
-
-var (
 	lockAirplaneRepoMockFetch sync.RWMutex
 	lockAirplaneRepoMockSave  sync.RWMutex
 )
@@ -217,20 +120,20 @@ func (mock *AirplaneRepoMock) SaveCalls() []struct {
 }
 
 var (
-	lockAirportRepoMockFetch sync.RWMutex
-	lockAirportRepoMockSave  sync.RWMutex
+	lockRepoMockFetch sync.RWMutex
+	lockRepoMockSave  sync.RWMutex
 )
 
-// Ensure, that AirportRepoMock does implement AirportRepo.
+// Ensure, that RepoMock does implement Repo.
 // If this is not the case, regenerate this file with moq.
-var _ airport.AirportRepo = &AirportRepoMock{}
+var _ airport.Repo = &RepoMock{}
 
-// AirportRepoMock is a mock implementation of AirportRepo.
+// RepoMock is a mock implementation of Repo.
 //
-//     func TestSomethingThatUsesAirportRepo(t *testing.T) {
+//     func TestSomethingThatUsesRepo(t *testing.T) {
 //
-//         // make and configure a mocked AirportRepo
-//         mockedAirportRepo := &AirportRepoMock{
+//         // make and configure a mocked Repo
+//         mockedRepo := &RepoMock{
 //             FetchFunc: func(in1 string) (airport.Airport, error) {
 // 	               panic("mock out the Fetch method")
 //             },
@@ -239,11 +142,11 @@ var _ airport.AirportRepo = &AirportRepoMock{}
 //             },
 //         }
 //
-//         // use mockedAirportRepo in code that requires AirportRepo
+//         // use mockedRepo in code that requires Repo
 //         // and then make assertions.
 //
 //     }
-type AirportRepoMock struct {
+type RepoMock struct {
 	// FetchFunc mocks the Fetch method.
 	FetchFunc func(in1 string) (airport.Airport, error)
 
@@ -266,63 +169,63 @@ type AirportRepoMock struct {
 }
 
 // Fetch calls FetchFunc.
-func (mock *AirportRepoMock) Fetch(in1 string) (airport.Airport, error) {
+func (mock *RepoMock) Fetch(in1 string) (airport.Airport, error) {
 	if mock.FetchFunc == nil {
-		panic("AirportRepoMock.FetchFunc: method is nil but AirportRepo.Fetch was just called")
+		panic("RepoMock.FetchFunc: method is nil but Repo.Fetch was just called")
 	}
 	callInfo := struct {
 		In1 string
 	}{
 		In1: in1,
 	}
-	lockAirportRepoMockFetch.Lock()
+	lockRepoMockFetch.Lock()
 	mock.calls.Fetch = append(mock.calls.Fetch, callInfo)
-	lockAirportRepoMockFetch.Unlock()
+	lockRepoMockFetch.Unlock()
 	return mock.FetchFunc(in1)
 }
 
 // FetchCalls gets all the calls that were made to Fetch.
 // Check the length with:
-//     len(mockedAirportRepo.FetchCalls())
-func (mock *AirportRepoMock) FetchCalls() []struct {
+//     len(mockedRepo.FetchCalls())
+func (mock *RepoMock) FetchCalls() []struct {
 	In1 string
 } {
 	var calls []struct {
 		In1 string
 	}
-	lockAirportRepoMockFetch.RLock()
+	lockRepoMockFetch.RLock()
 	calls = mock.calls.Fetch
-	lockAirportRepoMockFetch.RUnlock()
+	lockRepoMockFetch.RUnlock()
 	return calls
 }
 
 // Save calls SaveFunc.
-func (mock *AirportRepoMock) Save(in1 airport.Airport) (airport.Airport, error) {
+func (mock *RepoMock) Save(in1 airport.Airport) (airport.Airport, error) {
 	if mock.SaveFunc == nil {
-		panic("AirportRepoMock.SaveFunc: method is nil but AirportRepo.Save was just called")
+		panic("RepoMock.SaveFunc: method is nil but Repo.Save was just called")
 	}
 	callInfo := struct {
 		In1 airport.Airport
 	}{
 		In1: in1,
 	}
-	lockAirportRepoMockSave.Lock()
+	lockRepoMockSave.Lock()
 	mock.calls.Save = append(mock.calls.Save, callInfo)
-	lockAirportRepoMockSave.Unlock()
+	lockRepoMockSave.Unlock()
 	return mock.SaveFunc(in1)
 }
 
 // SaveCalls gets all the calls that were made to Save.
 // Check the length with:
-//     len(mockedAirportRepo.SaveCalls())
-func (mock *AirportRepoMock) SaveCalls() []struct {
+//     len(mockedRepo.SaveCalls())
+func (mock *RepoMock) SaveCalls() []struct {
 	In1 airport.Airport
 } {
 	var calls []struct {
 		In1 airport.Airport
 	}
-	lockAirportRepoMockSave.RLock()
+	lockRepoMockSave.RLock()
 	calls = mock.calls.Save
-	lockAirportRepoMockSave.RUnlock()
+	lockRepoMockSave.RUnlock()
 	return calls
 }

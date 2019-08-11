@@ -11,15 +11,7 @@ import (
 
 func TestAirportServiceArrive(t *testing.T) {
 	Convey("Given an airport service", t, func() {
-		tx := &TransactionMock{
-			BeginFunc: func() error {
-				return nil
-			},
-			CommitFunc: func() error {
-				return nil
-			},
-		}
-		airports := &AirportRepoMock{
+		airports := &RepoMock{
 			FetchFunc: func(id string) (airport.Airport, error) {
 				return airport.Airport{
 					ID:   id,
@@ -41,7 +33,7 @@ func TestAirportServiceArrive(t *testing.T) {
 				return in, nil
 			},
 		}
-		service := airport.NewAirportService(tx, airports, airplanes)
+		service := &airport.Service{airports, airplanes}
 		Convey("When all repo calls succeed", func() {
 			Convey("Then arrive should succeed", func() {
 				err := service.Arrive("airplane1", "airport1")
