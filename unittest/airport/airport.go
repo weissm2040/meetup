@@ -1,27 +1,27 @@
 package airport
 
-//go:generate moq -out mock_test.go -pkg airport_test . AirplaneRepo Repo
+//go:generate moq -out mock_test.go -pkg airport_test . AirplaneFetcherSaver FetcherSaver
 
 import (
 	"fmt"
 )
 
-// Repo represents methods for persisting and fetching airports.
-type Repo interface {
+// FetcherSaver represents methods for persisting and fetching airports.
+type FetcherSaver interface {
 	Save(Airport) (Airport, error)
 	Fetch(string) (Airport, error)
 }
 
-// AirplaneRepo represents methods for persisting and fetching airplanes.
-type AirplaneRepo interface {
+// AirplaneFetcherSaver represents methods for persisting and fetching airplanes.
+type AirplaneFetcherSaver interface {
 	Save(Airplane) (Airplane, error)
 	Fetch(string) (Airplane, error)
 }
 
 // Service can have an airplan arrive or depart from an airport.
 type Service struct {
-	Airports  Repo
-	Airplanes AirplaneRepo
+	Airports  FetcherSaver
+	Airplanes AirplaneFetcherSaver
 }
 
 // Arrive will confirm the arrival of an airplane at an airport.

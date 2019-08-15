@@ -9,20 +9,20 @@ import (
 )
 
 var (
-	lockAirplaneRepoMockFetch sync.RWMutex
-	lockAirplaneRepoMockSave  sync.RWMutex
+	lockAirplaneFetcherSaverMockFetch sync.RWMutex
+	lockAirplaneFetcherSaverMockSave  sync.RWMutex
 )
 
-// Ensure, that AirplaneRepoMock does implement AirplaneRepo.
+// Ensure, that AirplaneFetcherSaverMock does implement AirplaneFetcherSaver.
 // If this is not the case, regenerate this file with moq.
-var _ airport.AirplaneRepo = &AirplaneRepoMock{}
+var _ airport.AirplaneFetcherSaver = &AirplaneFetcherSaverMock{}
 
-// AirplaneRepoMock is a mock implementation of AirplaneRepo.
+// AirplaneFetcherSaverMock is a mock implementation of AirplaneFetcherSaver.
 //
-//     func TestSomethingThatUsesAirplaneRepo(t *testing.T) {
+//     func TestSomethingThatUsesAirplaneFetcherSaver(t *testing.T) {
 //
-//         // make and configure a mocked AirplaneRepo
-//         mockedAirplaneRepo := &AirplaneRepoMock{
+//         // make and configure a mocked AirplaneFetcherSaver
+//         mockedAirplaneFetcherSaver := &AirplaneFetcherSaverMock{
 //             FetchFunc: func(in1 string) (airport.Airplane, error) {
 // 	               panic("mock out the Fetch method")
 //             },
@@ -31,11 +31,11 @@ var _ airport.AirplaneRepo = &AirplaneRepoMock{}
 //             },
 //         }
 //
-//         // use mockedAirplaneRepo in code that requires AirplaneRepo
+//         // use mockedAirplaneFetcherSaver in code that requires AirplaneFetcherSaver
 //         // and then make assertions.
 //
 //     }
-type AirplaneRepoMock struct {
+type AirplaneFetcherSaverMock struct {
 	// FetchFunc mocks the Fetch method.
 	FetchFunc func(in1 string) (airport.Airplane, error)
 
@@ -58,82 +58,82 @@ type AirplaneRepoMock struct {
 }
 
 // Fetch calls FetchFunc.
-func (mock *AirplaneRepoMock) Fetch(in1 string) (airport.Airplane, error) {
+func (mock *AirplaneFetcherSaverMock) Fetch(in1 string) (airport.Airplane, error) {
 	if mock.FetchFunc == nil {
-		panic("AirplaneRepoMock.FetchFunc: method is nil but AirplaneRepo.Fetch was just called")
+		panic("AirplaneFetcherSaverMock.FetchFunc: method is nil but AirplaneFetcherSaver.Fetch was just called")
 	}
 	callInfo := struct {
 		In1 string
 	}{
 		In1: in1,
 	}
-	lockAirplaneRepoMockFetch.Lock()
+	lockAirplaneFetcherSaverMockFetch.Lock()
 	mock.calls.Fetch = append(mock.calls.Fetch, callInfo)
-	lockAirplaneRepoMockFetch.Unlock()
+	lockAirplaneFetcherSaverMockFetch.Unlock()
 	return mock.FetchFunc(in1)
 }
 
 // FetchCalls gets all the calls that were made to Fetch.
 // Check the length with:
-//     len(mockedAirplaneRepo.FetchCalls())
-func (mock *AirplaneRepoMock) FetchCalls() []struct {
+//     len(mockedAirplaneFetcherSaver.FetchCalls())
+func (mock *AirplaneFetcherSaverMock) FetchCalls() []struct {
 	In1 string
 } {
 	var calls []struct {
 		In1 string
 	}
-	lockAirplaneRepoMockFetch.RLock()
+	lockAirplaneFetcherSaverMockFetch.RLock()
 	calls = mock.calls.Fetch
-	lockAirplaneRepoMockFetch.RUnlock()
+	lockAirplaneFetcherSaverMockFetch.RUnlock()
 	return calls
 }
 
 // Save calls SaveFunc.
-func (mock *AirplaneRepoMock) Save(in1 airport.Airplane) (airport.Airplane, error) {
+func (mock *AirplaneFetcherSaverMock) Save(in1 airport.Airplane) (airport.Airplane, error) {
 	if mock.SaveFunc == nil {
-		panic("AirplaneRepoMock.SaveFunc: method is nil but AirplaneRepo.Save was just called")
+		panic("AirplaneFetcherSaverMock.SaveFunc: method is nil but AirplaneFetcherSaver.Save was just called")
 	}
 	callInfo := struct {
 		In1 airport.Airplane
 	}{
 		In1: in1,
 	}
-	lockAirplaneRepoMockSave.Lock()
+	lockAirplaneFetcherSaverMockSave.Lock()
 	mock.calls.Save = append(mock.calls.Save, callInfo)
-	lockAirplaneRepoMockSave.Unlock()
+	lockAirplaneFetcherSaverMockSave.Unlock()
 	return mock.SaveFunc(in1)
 }
 
 // SaveCalls gets all the calls that were made to Save.
 // Check the length with:
-//     len(mockedAirplaneRepo.SaveCalls())
-func (mock *AirplaneRepoMock) SaveCalls() []struct {
+//     len(mockedAirplaneFetcherSaver.SaveCalls())
+func (mock *AirplaneFetcherSaverMock) SaveCalls() []struct {
 	In1 airport.Airplane
 } {
 	var calls []struct {
 		In1 airport.Airplane
 	}
-	lockAirplaneRepoMockSave.RLock()
+	lockAirplaneFetcherSaverMockSave.RLock()
 	calls = mock.calls.Save
-	lockAirplaneRepoMockSave.RUnlock()
+	lockAirplaneFetcherSaverMockSave.RUnlock()
 	return calls
 }
 
 var (
-	lockRepoMockFetch sync.RWMutex
-	lockRepoMockSave  sync.RWMutex
+	lockFetcherSaverMockFetch sync.RWMutex
+	lockFetcherSaverMockSave  sync.RWMutex
 )
 
-// Ensure, that RepoMock does implement Repo.
+// Ensure, that FetcherSaverMock does implement FetcherSaver.
 // If this is not the case, regenerate this file with moq.
-var _ airport.Repo = &RepoMock{}
+var _ airport.FetcherSaver = &FetcherSaverMock{}
 
-// RepoMock is a mock implementation of Repo.
+// FetcherSaverMock is a mock implementation of FetcherSaver.
 //
-//     func TestSomethingThatUsesRepo(t *testing.T) {
+//     func TestSomethingThatUsesFetcherSaver(t *testing.T) {
 //
-//         // make and configure a mocked Repo
-//         mockedRepo := &RepoMock{
+//         // make and configure a mocked FetcherSaver
+//         mockedFetcherSaver := &FetcherSaverMock{
 //             FetchFunc: func(in1 string) (airport.Airport, error) {
 // 	               panic("mock out the Fetch method")
 //             },
@@ -142,11 +142,11 @@ var _ airport.Repo = &RepoMock{}
 //             },
 //         }
 //
-//         // use mockedRepo in code that requires Repo
+//         // use mockedFetcherSaver in code that requires FetcherSaver
 //         // and then make assertions.
 //
 //     }
-type RepoMock struct {
+type FetcherSaverMock struct {
 	// FetchFunc mocks the Fetch method.
 	FetchFunc func(in1 string) (airport.Airport, error)
 
@@ -169,63 +169,63 @@ type RepoMock struct {
 }
 
 // Fetch calls FetchFunc.
-func (mock *RepoMock) Fetch(in1 string) (airport.Airport, error) {
+func (mock *FetcherSaverMock) Fetch(in1 string) (airport.Airport, error) {
 	if mock.FetchFunc == nil {
-		panic("RepoMock.FetchFunc: method is nil but Repo.Fetch was just called")
+		panic("FetcherSaverMock.FetchFunc: method is nil but FetcherSaver.Fetch was just called")
 	}
 	callInfo := struct {
 		In1 string
 	}{
 		In1: in1,
 	}
-	lockRepoMockFetch.Lock()
+	lockFetcherSaverMockFetch.Lock()
 	mock.calls.Fetch = append(mock.calls.Fetch, callInfo)
-	lockRepoMockFetch.Unlock()
+	lockFetcherSaverMockFetch.Unlock()
 	return mock.FetchFunc(in1)
 }
 
 // FetchCalls gets all the calls that were made to Fetch.
 // Check the length with:
-//     len(mockedRepo.FetchCalls())
-func (mock *RepoMock) FetchCalls() []struct {
+//     len(mockedFetcherSaver.FetchCalls())
+func (mock *FetcherSaverMock) FetchCalls() []struct {
 	In1 string
 } {
 	var calls []struct {
 		In1 string
 	}
-	lockRepoMockFetch.RLock()
+	lockFetcherSaverMockFetch.RLock()
 	calls = mock.calls.Fetch
-	lockRepoMockFetch.RUnlock()
+	lockFetcherSaverMockFetch.RUnlock()
 	return calls
 }
 
 // Save calls SaveFunc.
-func (mock *RepoMock) Save(in1 airport.Airport) (airport.Airport, error) {
+func (mock *FetcherSaverMock) Save(in1 airport.Airport) (airport.Airport, error) {
 	if mock.SaveFunc == nil {
-		panic("RepoMock.SaveFunc: method is nil but Repo.Save was just called")
+		panic("FetcherSaverMock.SaveFunc: method is nil but FetcherSaver.Save was just called")
 	}
 	callInfo := struct {
 		In1 airport.Airport
 	}{
 		In1: in1,
 	}
-	lockRepoMockSave.Lock()
+	lockFetcherSaverMockSave.Lock()
 	mock.calls.Save = append(mock.calls.Save, callInfo)
-	lockRepoMockSave.Unlock()
+	lockFetcherSaverMockSave.Unlock()
 	return mock.SaveFunc(in1)
 }
 
 // SaveCalls gets all the calls that were made to Save.
 // Check the length with:
-//     len(mockedRepo.SaveCalls())
-func (mock *RepoMock) SaveCalls() []struct {
+//     len(mockedFetcherSaver.SaveCalls())
+func (mock *FetcherSaverMock) SaveCalls() []struct {
 	In1 airport.Airport
 } {
 	var calls []struct {
 		In1 airport.Airport
 	}
-	lockRepoMockSave.RLock()
+	lockFetcherSaverMockSave.RLock()
 	calls = mock.calls.Save
-	lockRepoMockSave.RUnlock()
+	lockFetcherSaverMockSave.RUnlock()
 	return calls
 }

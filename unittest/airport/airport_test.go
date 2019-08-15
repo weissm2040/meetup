@@ -11,7 +11,7 @@ import (
 
 func TestAirportServiceArrive(t *testing.T) {
 	Convey("Given an airport service", t, func() {
-		airports := &RepoMock{
+		airports := &FetcherSaverMock{
 			FetchFunc: func(id string) (airport.Airport, error) {
 				return airport.Airport{
 					ID:   id,
@@ -22,7 +22,7 @@ func TestAirportServiceArrive(t *testing.T) {
 				return in, nil
 			},
 		}
-		airplanes := &AirplaneRepoMock{
+		airplanes := &AirplaneFetcherSaverMock{
 			FetchFunc: func(id string) (airport.Airplane, error) {
 				return airport.Airplane{
 					ID:   id,
